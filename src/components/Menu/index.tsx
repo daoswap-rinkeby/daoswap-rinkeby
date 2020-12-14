@@ -123,7 +123,7 @@ export default function Menu() {
             <MessageCircle size={14} />
             Discord
           </MenuItem>
-          <MenuItem id="link" href="https://info.daoswap.global/">
+          <MenuItem id="link" href="https://rinkeby-info.daoswap.global/">
             <PieChart size={14} />
             Analytics
           </MenuItem>

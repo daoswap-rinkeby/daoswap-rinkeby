@@ -174,7 +174,7 @@ export default function Pool() {
               <>
                 <ButtonSecondary>
                   <RowBetween>
-                    <ExternalLink href={'https://info.daoswap.global/account/' + account}>
+                    <ExternalLink href={'https://rinkeby-info.daoswap.global/account/' + account}>
                       Account analytics and accrued fees
                     </ExternalLink>
                     <span> ↗</span>

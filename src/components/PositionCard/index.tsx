@@ -281,7 +281,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <ButtonSecondary padding="8px" borderRadius="8px" style={{ display: 'none' }}>
               <ExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href={`https://info.daoswap.global/account/${account}`}
+                href={`https://rinkeby-info.daoswap.global/account/${account}`}
               >
                 View accrued fees and analytics<span style={{ fontSize: '11px' }}>↗</span>
               </ExternalLink>
