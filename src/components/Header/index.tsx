@@ -324,7 +324,7 @@ export default function Header() {
             Vote
           </StyledNavLink>
           {/* TODO:Daoswap Display Comments */}
-          <StyledExternalLink id={`stake-nav-link`} href={'https://rinkeby-info.daoswap.global'}>
+          <StyledExternalLink id={`stake-nav-link`} href={'https://info.daoswap.global'}>
             {t('Charts')} <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink>
         </HeaderLinks>

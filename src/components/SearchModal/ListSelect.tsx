@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { ArrowLeft } from 'react-feather'
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
 import { Text } from 'rebass'
@@ -24,6 +24,7 @@ import ListLogo from '../ListLogo'
 import QuestionHelper from '../QuestionHelper'
 import Row, { RowBetween } from '../Row'
 import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds'
+import { useTranslation } from 'react-i18next'
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
@@ -90,6 +91,7 @@ function listUrlRowHTMLId(listUrl: string) {
 }
 
 const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; onBack: () => void }) {
+  const { t } = useTranslation()
   const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
   const selectedListUrl = useSelectedListUrl()
   const dispatch = useDispatch<AppDispatch>()
@@ -112,11 +114,11 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
 
   const selectThisList = useCallback(() => {
     if (isSelected) return
-    ReactGA.event({
-      category: 'Lists',
-      action: 'Select List',
-      label: listUrl
-    })
+    // ReactGA.event({
+    //   category: 'Lists',
+    //   action: 'Select List',
+    //   label: listUrl
+    // })
 
     dispatch(selectList(listUrl))
     onBack()
@@ -124,29 +126,29 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
 
   const handleAcceptListUpdate = useCallback(() => {
     if (!pending) return
-    ReactGA.event({
-      category: 'Lists',
-      action: 'Update List from List Select',
-      label: listUrl
-    })
+    // ReactGA.event({
+    //   category: 'Lists',
+    //   action: 'Update List from List Select',
+    //   label: listUrl
+    // })
     dispatch(acceptListUpdate(listUrl))
   }, [dispatch, listUrl, pending])
 
   const handleRemoveList = useCallback(() => {
-    ReactGA.event({
-      category: 'Lists',
-      action: 'Start Remove List',
-      label: listUrl
-    })
-    if (window.prompt(`Please confirm you would like to remove this list by typing REMOVE`) === `REMOVE`) {
-      ReactGA.event({
-        category: 'Lists',
-        action: 'Confirm Remove List',
-        label: listUrl
-      })
+    // ReactGA.event({
+    //   category: 'Lists',
+    //   action: 'Start Remove List',
+    //   label: listUrl
+    // })
+    if (window.prompt(t(`Please confirm you would like to remove this list by typing REMOVE`)) === `REMOVE`) {
+      // ReactGA.event({
+      //   category: 'Lists',
+      //   action: 'Confirm Remove List',
+      //   label: listUrl
+      // })
       dispatch(removeList(listUrl))
     }
-  }, [dispatch, listUrl])
+  }, [dispatch, listUrl, t])
 
   if (!list) return null
 
@@ -196,12 +198,12 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
           <PopoverContainer show={true} ref={setPopperElement as any} style={styles.popper} {...attributes.popper}>
             <div>{list && listVersionLabel(list.version)}</div>
             <SeparatorDark />
-            <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>View list</ExternalLink>
+            <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>{t('View list')}</ExternalLink>
             <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
-              Remove list
+              {t('Remove list')}
             </UnpaddedLinkStyledButton>
             {pending && (
-              <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>Update list</UnpaddedLinkStyledButton>
+              <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>{t('Update list')}</UnpaddedLinkStyledButton>
             )}
           </PopoverContainer>
         )}
@@ -212,7 +214,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
           className="select-button"
           style={{ width: '5rem', minWidth: '5rem', padding: '0.5rem .35rem', borderRadius: '12px', fontSize: '14px' }}
         >
-          Selected
+          {t('Selected')}
         </ButtonPrimary>
       ) : (
         <>
@@ -227,7 +229,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
             }}
             onClick={selectThisList}
           >
-            Select
+            {t('Select')}
           </ButtonPrimary>
         </>
       )}
@@ -248,6 +250,7 @@ const ListContainer = styled.div`
 `
 
 export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBack: () => void }) {
+  const { t } = useTranslation()
   const [listUrlInput, setListUrlInput] = useState<string>('')
 
   const dispatch = useDispatch<AppDispatch>()
@@ -267,18 +270,18 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
     fetchList(listUrlInput)
       .then(() => {
         setListUrlInput('')
-        ReactGA.event({
-          category: 'Lists',
-          action: 'Add List',
-          label: listUrlInput
-        })
+        // ReactGA.event({
+        //   category: 'Lists',
+        //   action: 'Add List',
+        //   label: listUrlInput
+        // })
       })
       .catch(error => {
-        ReactGA.event({
-          category: 'Lists',
-          action: 'Add List Failed',
-          label: listUrlInput
-        })
+        // ReactGA.event({
+        //   category: 'Lists',
+        //   action: 'Add List Failed',
+        //   label: listUrlInput
+        // })
         setAddError(error.message)
         dispatch(removeList(listUrlInput))
       })
@@ -327,7 +330,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
             <ArrowLeft style={{ cursor: 'pointer' }} onClick={onBack} />
           </div>
           <Text fontWeight={500} fontSize={20}>
-            Manage Lists
+            {t('Manage Lists')}
           </Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
@@ -337,8 +340,12 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
 
       <PaddedColumn gap="14px">
         <Text fontWeight={600}>
-          Add a list{' '}
-          <QuestionHelper text="Token lists are an open specification for lists of ERC20 tokens. You can use any token list by entering its URL below. Beware that third party token lists can contain fake or malicious ERC20 tokens." />
+          {t('Add a list')}{' '}
+          <QuestionHelper
+            text={t(
+              'Token lists are an open specification for lists of ERC20 tokens. You can use any token list by entering its URL below. Beware that third party token lists can contain fake or malicious ERC20 tokens.'
+            )}
+          />
         </Text>
         <Row>
           <SearchInput
@@ -351,7 +358,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
             style={{ height: '2.75rem', borderRadius: 12, padding: '12px' }}
           />
           <AddListButton onClick={handleAddList} disabled={!validUrl}>
-            Add
+            {t('Add')}
           </AddListButton>
         </Row>
         {addError ? (
@@ -371,7 +378,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
       <Separator />
 
       <div style={{ padding: '16px', textAlign: 'center' }}>
-        <ExternalLink href="https://tokenlists.org">Browse lists</ExternalLink>
+        <ExternalLink href="https://tokenlists.org">{t('Browse lists')}</ExternalLink>
       </div>
     </Column>
   )
