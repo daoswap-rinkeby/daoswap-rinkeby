@@ -174,9 +174,9 @@ export function useDerivedSwapInfo(): {
     inputError = inputError ?? t('Select a token')
   }
 
-  if (DOI_ADDRESS === inputCurrencyId) {
-    inputError = inputError ?? t('DOI is not tradable')
-  }
+  // if (DOI_ADDRESS === inputCurrencyId) {
+  //   inputError = inputError ?? t('DOI is not tradable')
+  // }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
