@@ -1,11 +1,11 @@
 import React from 'react'
 import { AutoColumn } from '../../components/Column'
 import styled from 'styled-components'
-import { STAKING_REWARDS_INFO, useStakingInfo } from '../../state/stake/hooks'
+import { STAKING_REWARDS_INFO, useStakingInfo } from '../../state/stakeHistory/hooks'
 import { TYPE, ExternalLink } from '../../theme'
-import PoolCard from '../../components/earn/PoolCard'
+import PoolCard from '../../components/earnHistory/PoolCard'
 import { RowBetween } from '../../components/Row'
-import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
+import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earnHistory/styled'
 import { Countdown } from './Countdown'
 import Loader from '../../components/Loader'
 import { useActiveWeb3React } from '../../hooks'
@@ -75,7 +75,7 @@ export default function Earn() {
         </DataCard>
       </TopSection>
 
-      <StakeTabs active={'doi'} />
+      <StakeTabs active={'doi-history'} />
 
       <AutoColumn gap="lg" style={{ width: '100%', maxWidth: '720px' }}>
         <DataRow style={{ alignItems: 'baseline' }}>
